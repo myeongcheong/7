@@ -1,0 +1,1533 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>[캐릭터 이름] — Story</title>
+
+<style>
+
+/* =========================================================
+   기본 설정
+========================================================= */
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+html,
+body {
+    width: 100%;
+    height: 100%;
+}
+
+body {
+    font-family:
+        "Pretendard",
+        "Noto Sans KR",
+        sans-serif;
+
+    background: #f8f3f1;
+    color: #40393a;
+
+    overflow: hidden;
+}
+
+
+/* =========================================================
+   전체 사이트
+========================================================= */
+
+.site {
+    width: 100vw;
+    height: 100vh;
+
+    position: relative;
+
+    overflow: hidden;
+}
+
+
+/* =========================================================
+   페이지
+========================================================= */
+
+.page {
+    position: absolute;
+
+    width: 100%;
+    height: 100%;
+
+    top: 0;
+    left: 0;
+
+    opacity: 0;
+    visibility: hidden;
+
+    transform: translateY(20px);
+
+    transition:
+        opacity 0.6s ease,
+        transform 0.6s ease,
+        visibility 0.6s;
+
+    overflow-y: auto;
+}
+
+.page.active {
+    opacity: 1;
+    visibility: visible;
+
+    transform: translateY(0);
+}
+
+
+/* =========================================================
+   공통 컨테이너
+========================================================= */
+
+.page-inner {
+    width: min(1100px, 90%);
+
+    margin: 0 auto;
+
+    padding: 100px 0 140px;
+}
+
+
+/* =========================================================
+   상단 작은 타이틀
+========================================================= */
+
+.eyebrow {
+    font-size: 11px;
+
+    letter-spacing: 4px;
+
+    color: #b89b9d;
+
+    margin-bottom: 18px;
+}
+
+
+/* =========================================================
+   제목
+========================================================= */
+
+.page-title {
+    font-family:
+        Georgia,
+        "Times New Roman",
+        serif;
+
+    font-size: clamp(45px, 7vw, 82px);
+
+    font-weight: 400;
+
+    letter-spacing: -2px;
+
+    color: #3c3536;
+
+    margin-bottom: 25px;
+}
+
+.page-title span {
+    color: #d59ba2;
+}
+
+
+/* =========================================================
+   설명
+========================================================= */
+
+.description {
+    font-size: 14px;
+
+    line-height: 2;
+
+    color: #827779;
+
+    max-width: 600px;
+}
+
+
+/* =========================================================
+   HOME
+========================================================= */
+
+#home {
+    background:
+        linear-gradient(
+            90deg,
+            rgba(255,255,255,0.96),
+            rgba(255,255,255,0.65)
+        ),
+        url("images/main.jpg");
+
+    background-size: cover;
+    background-position: center;
+}
+
+.home-content {
+    width: min(1100px, 90%);
+
+    height: 100%;
+
+    margin: auto;
+
+    display: flex;
+
+    align-items: center;
+}
+
+.home-text {
+    max-width: 650px;
+}
+
+.home-small {
+    font-size: 11px;
+
+    letter-spacing: 5px;
+
+    color: #b69a9d;
+
+    margin-bottom: 25px;
+}
+
+.home-title {
+    font-family:
+        Georgia,
+        "Times New Roman",
+        serif;
+
+    font-size: clamp(55px, 9vw, 105px);
+
+    font-weight: 400;
+
+    line-height: 0.95;
+
+    letter-spacing: -5px;
+
+    color: #3e3637;
+}
+
+.home-title span {
+    color: #d69ca4;
+}
+
+.home-subtitle {
+    margin-top: 35px;
+
+    font-size: 14px;
+
+    letter-spacing: 2px;
+
+    color: #766b6d;
+}
+
+.home-line {
+    width: 70px;
+
+    height: 1px;
+
+    background: #d69ca4;
+
+    margin: 35px 0;
+}
+
+.home-intro {
+    font-size: 13px;
+
+    line-height: 2;
+
+    color: #837778;
+}
+
+
+/* =========================================================
+   캐릭터 이미지 카드
+========================================================= */
+
+.character-image {
+    width: 100%;
+
+    max-width: 360px;
+
+    aspect-ratio: 3 / 4;
+
+    object-fit: cover;
+
+    border-radius: 4px;
+
+    display: block;
+
+    box-shadow:
+        0 20px 60px rgba(70, 50, 50, 0.12);
+}
+
+.home-character {
+    position: absolute;
+
+    right: 8%;
+
+    bottom: 0;
+
+    height: 82vh;
+
+    max-height: 850px;
+
+    width: auto;
+
+    object-fit: contain;
+
+    object-position: bottom;
+
+    filter:
+        drop-shadow(
+            0 20px 35px
+            rgba(60,40,40,0.12)
+        );
+}
+
+
+/* =========================================================
+   메뉴 버튼
+========================================================= */
+
+.menu-button {
+    position: fixed;
+
+    top: 30px;
+    right: 35px;
+
+    z-index: 1000;
+
+    width: 55px;
+    height: 55px;
+
+    border: 1px solid rgba(70,50,50,0.18);
+
+    border-radius: 50%;
+
+    background: rgba(255,255,255,0.8);
+
+    backdrop-filter: blur(12px);
+
+    cursor: pointer;
+
+    display: flex;
+
+    flex-direction: column;
+
+    justify-content: center;
+
+    align-items: center;
+
+    gap: 5px;
+}
+
+.menu-button span {
+    width: 18px;
+    height: 1px;
+
+    background: #514748;
+
+    transition: 0.3s;
+}
+
+
+/* =========================================================
+   메뉴
+========================================================= */
+
+.menu {
+    position: fixed;
+
+    z-index: 999;
+
+    top: 0;
+    right: 0;
+
+    width: min(390px, 100%);
+
+    height: 100vh;
+
+    background:
+        rgba(255,250,249,0.97);
+
+    backdrop-filter: blur(20px);
+
+    transform: translateX(100%);
+
+    transition:
+        transform 0.6s
+        cubic-bezier(.77,0,.18,1);
+
+    padding: 110px 50px;
+}
+
+.menu.open {
+    transform: translateX(0);
+}
+
+.menu-title {
+    font-family:
+        Georgia,
+        serif;
+
+    font-size: 35px;
+
+    margin-bottom: 50px;
+
+    color: #4b4042;
+}
+
+.menu-list {
+    list-style: none;
+}
+
+.menu-list li {
+    margin-bottom: 25px;
+}
+
+.menu-list button {
+    border: none;
+
+    background: none;
+
+    cursor: pointer;
+
+    font-family: inherit;
+
+    font-size: 14px;
+
+    letter-spacing: 2px;
+
+    color: #65595b;
+
+    transition: 0.3s;
+
+    text-align: left;
+}
+
+.menu-list button:hover {
+    color: #d4939c;
+
+    padding-left: 8px;
+}
+
+.menu-number {
+    font-size: 10px;
+
+    color: #c2aaac;
+
+    margin-right: 12px;
+}
+
+
+/* =========================================================
+   STORY
+========================================================= */
+
+.story-box {
+    margin-top: 60px;
+
+    padding: 60px;
+
+    background: rgba(255,255,255,0.7);
+
+    border: 1px solid rgba(120,90,90,0.08);
+
+    line-height: 2.2;
+
+    font-size: 14px;
+
+    color: #665b5d;
+}
+
+.story-box p {
+    margin-bottom: 25px;
+}
+
+
+/* =========================================================
+   CHARACTER
+========================================================= */
+
+.character-grid {
+    margin-top: 60px;
+
+    display: grid;
+
+    grid-template-columns:
+        360px 1fr;
+
+    gap: 80px;
+
+    align-items: start;
+}
+
+.profile-list {
+    display: grid;
+
+    grid-template-columns:
+        1fr 1fr;
+
+    border-top: 1px solid #ded3d3;
+}
+
+.profile-item {
+    padding: 20px 10px;
+
+    border-bottom:
+        1px solid #ded3d3;
+}
+
+.profile-label {
+    display: block;
+
+    font-size: 10px;
+
+    letter-spacing: 2px;
+
+    color: #b59b9d;
+
+    margin-bottom: 7px;
+}
+
+.profile-value {
+    font-size: 14px;
+
+    color: #53494b;
+}
+
+
+/* =========================================================
+   RELATIONSHIP
+========================================================= */
+
+.relationship {
+    margin-top: 60px;
+
+    display: grid;
+
+    grid-template-columns:
+        1fr 1fr;
+
+    gap: 25px;
+}
+
+.relationship-card {
+    padding: 45px;
+
+    min-height: 240px;
+
+    background: #fffafa;
+
+    border: 1px solid #eee2e2;
+}
+
+.relationship-card h3 {
+    font-family: Georgia, serif;
+
+    font-weight: 400;
+
+    font-size: 26px;
+
+    margin-bottom: 20px;
+
+    color: #4b4142;
+}
+
+.relationship-card p {
+    font-size: 13px;
+
+    line-height: 2;
+
+    color: #817375;
+}
+
+
+/* =========================================================
+   PAST
+========================================================= */
+
+.timeline {
+    margin-top: 70px;
+
+    position: relative;
+}
+
+.timeline::before {
+    content: "";
+
+    position: absolute;
+
+    left: 8px;
+
+    top: 0;
+
+    width: 1px;
+
+    height: 100%;
+
+    background: #ddcfd0;
+}
+
+.timeline-item {
+    position: relative;
+
+    padding-left: 50px;
+
+    margin-bottom: 60px;
+}
+
+.timeline-item::before {
+    content: "";
+
+    position: absolute;
+
+    left: 3px;
+
+    top: 7px;
+
+    width: 11px;
+    height: 11px;
+
+    border-radius: 50%;
+
+    background: #d79da5;
+
+    border: 3px solid #f8f3f1;
+}
+
+.timeline-year {
+    font-family: Georgia, serif;
+
+    font-size: 18px;
+
+    color: #c18d94;
+
+    margin-bottom: 10px;
+}
+
+.timeline-title {
+    font-size: 18px;
+
+    margin-bottom: 12px;
+
+    color: #4e4446;
+}
+
+.timeline-text {
+    font-size: 13px;
+
+    line-height: 2;
+
+    color: #817375;
+
+    max-width: 700px;
+}
+
+
+/* =========================================================
+   QUOTES
+========================================================= */
+
+.quotes {
+    margin-top: 70px;
+
+    display: grid;
+
+    gap: 25px;
+}
+
+.quote {
+    padding: 45px;
+
+    background: #fffafa;
+
+    border-left: 2px solid #d79da5;
+
+    font-family: Georgia, serif;
+
+    font-size: 23px;
+
+    line-height: 1.7;
+
+    color: #5c5052;
+}
+
+.quote small {
+    display: block;
+
+    margin-top: 20px;
+
+    font-family:
+        "Pretendard",
+        sans-serif;
+
+    font-size: 11px;
+
+    color: #aa9698;
+
+    letter-spacing: 1px;
+}
+
+
+/* =========================================================
+   SECRET
+========================================================= */
+
+.secret-box {
+    margin-top: 70px;
+
+    padding: 70px;
+
+    text-align: center;
+
+    background:
+        linear-gradient(
+            135deg,
+            #fffafa,
+            #f6e9ea
+        );
+
+    border: 1px solid #eadadb;
+}
+
+.secret-symbol {
+    font-size: 30px;
+
+    color: #d39aa2;
+
+    margin-bottom: 25px;
+}
+
+.secret-text {
+    font-family: Georgia, serif;
+
+    font-size: 22px;
+
+    line-height: 1.8;
+
+    color: #5b4e50;
+}
+
+
+/* =========================================================
+   FOOTER
+========================================================= */
+
+.footer {
+    margin-top: 100px;
+
+    text-align: center;
+
+    font-size: 10px;
+
+    letter-spacing: 3px;
+
+    color: #b5a4a5;
+}
+
+
+/* =========================================================
+   모바일
+========================================================= */
+
+@media (max-width: 800px) {
+
+    .home-character {
+        opacity: 0.25;
+
+        right: -15%;
+
+        height: 75vh;
+    }
+
+    .home-text {
+        position: relative;
+
+        z-index: 2;
+    }
+
+    .page-inner {
+        padding-top: 90px;
+    }
+
+    .character-grid {
+        grid-template-columns: 1fr;
+
+        gap: 45px;
+    }
+
+    .relationship {
+        grid-template-columns: 1fr;
+    }
+
+    .story-box {
+        padding: 30px;
+    }
+
+    .secret-box {
+        padding: 45px 25px;
+    }
+
+    .menu {
+        padding: 100px 35px;
+    }
+
+}
+
+
+/* =========================================================
+   작은 화면
+========================================================= */
+
+@media (max-width: 480px) {
+
+    .menu-button {
+        width: 48px;
+        height: 48px;
+
+        right: 20px;
+        top: 20px;
+    }
+
+    .home-title {
+        font-size: 55px;
+    }
+
+    .profile-list {
+        grid-template-columns: 1fr;
+    }
+
+}
+
+</style>
+</head>
+
+
+<body>
+
+
+<div class="site">
+
+
+<!-- =====================================================
+     메뉴 버튼
+===================================================== -->
+
+<button
+    class="menu-button"
+    onclick="toggleMenu()"
+    aria-label="메뉴">
+
+    <span></span>
+    <span></span>
+    <span></span>
+
+</button>
+
+
+<!-- =====================================================
+     메뉴
+===================================================== -->
+
+<nav class="menu" id="menu">
+
+    <div class="menu-title">
+        Story
+    </div>
+
+    <ul class="menu-list">
+
+        <li>
+            <button onclick="showPage('home')">
+                <span class="menu-number">01</span>
+                HOME
+            </button>
+        </li>
+
+        <li>
+            <button onclick="showPage('story')">
+                <span class="menu-number">02</span>
+                STORY
+            </button>
+        </li>
+
+        <li>
+            <button onclick="showPage('character')">
+                <span class="menu-number">03</span>
+                CHARACTER
+            </button>
+        </li>
+
+        <li>
+            <button onclick="showPage('relationship')">
+                <span class="menu-number">04</span>
+                RELATIONSHIP
+            </button>
+        </li>
+
+        <li>
+            <button onclick="showPage('past')">
+                <span class="menu-number">05</span>
+                PAST
+            </button>
+        </li>
+
+        <li>
+            <button onclick="showPage('quotes')">
+                <span class="menu-number">06</span>
+                QUOTES
+            </button>
+        </li>
+
+        <li>
+            <button onclick="showPage('secret')">
+                <span class="menu-number">07</span>
+                SECRET
+            </button>
+        </li>
+
+    </ul>
+
+</nav>
+
+
+<!-- =====================================================
+     HOME
+===================================================== -->
+
+<section
+    class="page active"
+    id="home">
+
+    <div class="home-content">
+
+        <div class="home-text">
+
+            <div class="home-small">
+                CRACK STORY / 01
+            </div>
+
+            <h1 class="home-title">
+
+                [캐릭터<br>
+                이름]<br>
+
+                <span>♡</span>
+
+            </h1>
+
+            <div class="home-subtitle">
+
+                [캐릭터를 나타내는 한 문장]
+
+            </div>
+
+            <div class="home-line"></div>
+
+            <p class="home-intro">
+
+                [캐릭터와 {user}의 이야기를
+                짧게 소개해주세요.]
+
+            </p>
+
+        </div>
+
+        <!-- 캐릭터 이미지 -->
+
+        <img
+            src="images/character.png"
+            class="home-character"
+            alt="character">
+
+    </div>
+
+</section>
+
+
+
+<!-- =====================================================
+     STORY
+===================================================== -->
+
+<section
+    class="page"
+    id="story">
+
+    <div class="page-inner">
+
+        <div class="eyebrow">
+            STORY
+        </div>
+
+        <h2 class="page-title">
+            Our <span>Story.</span>
+        </h2>
+
+        <p class="description">
+            [이 이야기가 어떻게 시작되었는지 적어주세요.]
+        </p>
+
+
+        <div class="story-box">
+
+            <p>
+                [스토리 01]
+            </p>
+
+            <p>
+                [스토리 02]
+            </p>
+
+            <p>
+                [스토리 03]
+            </p>
+
+            <p>
+                [스토리 04]
+            </p>
+
+        </div>
+
+
+        <div class="footer">
+            TO BE CONTINUED ♡
+        </div>
+
+    </div>
+
+</section>
+
+
+
+<!-- =====================================================
+     CHARACTER
+===================================================== -->
+
+<section
+    class="page"
+    id="character">
+
+    <div class="page-inner">
+
+        <div class="eyebrow">
+            CHARACTER
+        </div>
+
+        <h2 class="page-title">
+            About <span>Him.</span>
+        </h2>
+
+
+        <div class="character-grid">
+
+            <img
+                src="images/character-profile.jpg"
+                class="character-image"
+                alt="character">
+
+
+            <div>
+
+                <p class="description">
+                    [캐릭터에 대한 짧은 소개]
+                </p>
+
+
+                <div class="profile-list">
+
+                    <div class="profile-item">
+                        <span class="profile-label">
+                            NAME
+                        </span>
+
+                        <span class="profile-value">
+                            [이름]
+                        </span>
+                    </div>
+
+
+                    <div class="profile-item">
+                        <span class="profile-label">
+                            AGE
+                        </span>
+
+                        <span class="profile-value">
+                            [나이]
+                        </span>
+                    </div>
+
+
+                    <div class="profile-item">
+                        <span class="profile-label">
+                            BIRTHDAY
+                        </span>
+
+                        <span class="profile-value">
+                            [생일]
+                        </span>
+                    </div>
+
+
+                    <div class="profile-item">
+                        <span class="profile-label">
+                            HEIGHT
+                        </span>
+
+                        <span class="profile-value">
+                            [키]
+                        </span>
+                    </div>
+
+
+                    <div class="profile-item">
+                        <span class="profile-label">
+                            JOB
+                        </span>
+
+                        <span class="profile-value">
+                            [직업]
+                        </span>
+                    </div>
+
+
+                    <div class="profile-item">
+                        <span class="profile-label">
+                            MBTI
+                        </span>
+
+                        <span class="profile-value">
+                            [MBTI]
+                        </span>
+                    </div>
+
+
+                    <div class="profile-item">
+                        <span class="profile-label">
+                            PERSONALITY
+                        </span>
+
+                        <span class="profile-value">
+                            [성격]
+                        </span>
+                    </div>
+
+
+                    <div class="profile-item">
+                        <span class="profile-label">
+                            TYPE
+                        </span>
+
+                        <span class="profile-value">
+                            [캐릭터 타입]
+                        </span>
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <div class="footer">
+            CHARACTER PROFILE
+        </div>
+
+    </div>
+
+</section>
+
+
+
+<!-- =====================================================
+     RELATIONSHIP
+===================================================== -->
+
+<section
+    class="page"
+    id="relationship">
+
+    <div class="page-inner">
+
+        <div class="eyebrow">
+            RELATIONSHIP
+        </div>
+
+        <h2 class="page-title">
+            You & <span>Me.</span>
+        </h2>
+
+        <p class="description">
+            [캐릭터와 {user}의 관계를 설명해주세요.]
+        </p>
+
+
+        <div class="relationship">
+
+            <div class="relationship-card">
+
+                <h3>
+                    Before
+                </h3>
+
+                <p>
+                    [처음 만났을 때의 관계]
+                    <br><br>
+                    [서로를 어떻게 생각했는지]
+                </p>
+
+            </div>
+
+
+            <div class="relationship-card">
+
+                <h3>
+                    Now
+                </h3>
+
+                <p>
+                    [현재 두 사람의 관계]
+                    <br><br>
+                    [캐릭터가 {user}에게 느끼는 감정]
+                </p>
+
+            </div>
+
+
+            <div class="relationship-card">
+
+                <h3>
+                    His Heart
+                </h3>
+
+                <p>
+                    [캐릭터가 숨기고 있는 마음]
+                </p>
+
+            </div>
+
+
+            <div class="relationship-card">
+
+                <h3>
+                    Promise
+                </h3>
+
+                <p>
+                    [두 사람 사이의 약속]
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <div class="footer">
+            JUST YOU & ME
+        </div>
+
+    </div>
+
+</section>
+
+
+
+<!-- =====================================================
+     PAST
+===================================================== -->
+
+<section
+    class="page"
+    id="past">
+
+    <div class="page-inner">
+
+        <div class="eyebrow">
+            PAST
+        </div>
+
+        <h2 class="page-title">
+            Before <span>You.</span>
+        </h2>
+
+        <p class="description">
+            [캐릭터가 {user}를 만나기 전의 이야기]
+        </p>
+
+
+        <div class="timeline">
+
+
+            <div class="timeline-item">
+
+                <div class="timeline-year">
+                    [YEAR]
+                </div>
+
+                <div class="timeline-title">
+                    [사건 제목]
+                </div>
+
+                <p class="timeline-text">
+                    [과거 이야기]
+                </p>
+
+            </div>
+
+
+            <div class="timeline-item">
+
+                <div class="timeline-year">
+                    [YEAR]
+                </div>
+
+                <div class="timeline-title">
+                    [사건 제목]
+                </div>
+
+                <p class="timeline-text">
+                    [과거 이야기]
+                </p>
+
+            </div>
+
+
+            <div class="timeline-item">
+
+                <div class="timeline-year">
+                    [YEAR]
+                </div>
+
+                <div class="timeline-title">
+                    [사건 제목]
+                </div>
+
+                <p class="timeline-text">
+                    [과거 이야기]
+                </p>
+
+            </div>
+
+
+        </div>
+
+
+        <div class="footer">
+            HIS STORY
+        </div>
+
+    </div>
+
+</section>
+
+
+
+<!-- =====================================================
+     QUOTES
+===================================================== -->
+
+<section
+    class="page"
+    id="quotes">
+
+    <div class="page-inner">
+
+        <div class="eyebrow">
+            QUOTES
+        </div>
+
+        <h2 class="page-title">
+            Words <span>from him.</span>
+        </h2>
+
+
+        <div class="quotes">
+
+            <div class="quote">
+
+                “[캐릭터의 대표 대사]”
+
+                <small>
+                    — [상황]
+                </small>
+
+            </div>
+
+
+            <div class="quote">
+
+                “[{user}에게 하는 대사]”
+
+                <small>
+                    — [상황]
+                </small>
+
+            </div>
+
+
+            <div class="quote">
+
+                “[캐릭터의 속마음 또는 중요한 대사]”
+
+                <small>
+                    — [상황]
+                </small>
+
+            </div>
+
+        </div>
+
+
+        <div class="footer">
+            HIS WORDS
+        </div>
+
+    </div>
+
+</section>
+
+
+
+<!-- =====================================================
+     SECRET
+===================================================== -->
+
+<section
+    class="page"
+    id="secret">
+
+    <div class="page-inner">
+
+        <div class="eyebrow">
+            SECRET
+        </div>
+
+        <h2 class="page-title">
+            One <span>Secret.</span>
+        </h2>
+
+
+        <div class="secret-box">
+
+            <div class="secret-symbol">
+                ♡
+            </div>
+
+            <div class="secret-text">
+
+                [캐릭터가 숨기고 있는
+                비밀을 적어주세요.]
+
+            </div>
+
+        </div>
+
+
+        <div class="footer">
+            SOME THINGS ARE ONLY FOR YOU
+        </div>
+
+    </div>
+
+</section>
+
+
+</div>
+
+
+
+<script>
+
+/* =========================================================
+   페이지 전환
+========================================================= */
+
+function showPage(pageId) {
+
+    const pages =
+        document.querySelectorAll(".page");
+
+    pages.forEach(page => {
+
+        page.classList.remove("active");
+
+    });
+
+
+    const target =
+        document.getElementById(pageId);
+
+    if (target) {
+
+        target.classList.add("active");
+
+        target.scrollTop = 0;
+
+    }
+
+
+    closeMenu();
+
+}
+
+
+/* =========================================================
+   메뉴 열기
+========================================================= */
+
+function toggleMenu() {
+
+    const menu =
+        document.getElementById("menu");
+
+    menu.classList.toggle("open");
+
+}
+
+
+/* =========================================================
+   메뉴 닫기
+========================================================= */
+
+function closeMenu() {
+
+    const menu =
+        document.getElementById("menu");
+
+    menu.classList.remove("open");
+
+}
+
+
+/* =========================================================
+   ESC 키로 메뉴 닫기
+========================================================= */
+
+document.addEventListener(
+    "keydown",
+    function(event) {
+
+        if (event.key === "Escape") {
+
+            closeMenu();
+
+        }
+
+    }
+);
+
+</script>
+
+
+</body>
+</html>
